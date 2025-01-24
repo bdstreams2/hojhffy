@@ -102,7 +102,7 @@ def hls_proxy():
         stream_headers = json.loads(stream_headers)
     else:
         stream_headers = {}
-    
+
     for _ in range(MAX_RETRIES):
         try:
             response = requests.get(stream_url, headers=stream_headers)
@@ -110,9 +110,9 @@ def hls_proxy():
             break
         except:
             continue
-    
+
     m3u8_obj = m3u8.loads(response.text)
-    
+
     if m3u8_obj.is_variant:
         if not len(m3u8_obj.playlists) < 2:
             m3u8_obj = configure_single(m3u8_obj, get_base_url(response.url), stream_headers)
@@ -197,8 +197,10 @@ def handle_key():
             break
         except:
             continue
-    
+
     return Response(response.content, content_type="application/octet-stream")
 
-if __name__ == "__main__":
-    proxy.run(debug=True)
+
+    
+
+proxy.run(host='0.0.0.0', port=81)
